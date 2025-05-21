@@ -1,0 +1,30 @@
+server.host: "0.0.0.0"
+xpack.encryptedSavedObjects.encryptionKey: "12345678901234567890123456789012"
+telemetry.enabled: "true"
+xpack.fleet.packages:
+  - name: fleet_server
+    version: latest
+  - name: system
+    version: latest
+xpack.fleet.agentPolicies:
+  - name: Fleet-Server-Policy
+    id: fleet-server-policy
+    namespace: default
+    package_policies:
+      - name: fleet_server-1
+        package:
+          name: fleet_server
+  - name: Test-Policy-1
+    id: test-policy-1
+    namespace: default
+    package_policies:
+      - name: test-system-1
+        package:
+          name: system
+  - name: Test-Policy-2
+    id: test-policy-2
+    namespace: default
+    package_policies:
+      - name: test-system-2
+        package:
+          name: system
