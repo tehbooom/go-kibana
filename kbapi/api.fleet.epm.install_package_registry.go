@@ -104,7 +104,7 @@ func (api *API) newFleetEPMInstallPackageRegistry() func(context.Context, *Fleet
 			httpReq.URL.RawQuery = q.Encode()
 		}
 
-		jsonBody, err := json.Marshal(req)
+		jsonBody, err := json.Marshal(req.Body)
 		if err != nil {
 			return nil, err
 		}
