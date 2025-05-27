@@ -25,7 +25,6 @@ type FleetEPMInstallPackageRegistryResponseBody struct {
 	Items []Package `json:"items"`
 }
 
-// FleetEPMInstallPackageRegistryRequest  is the request for newFleetBulkGetAgentPolicies
 type FleetEPMInstallPackageRegistryRequest struct {
 	PackageName    string
 	PackageVersion *string
@@ -48,22 +47,21 @@ type FleetEPMInstallPackageRegistryRequestBody struct {
 func (api *API) newFleetEPMInstallPackageRegistry() func(context.Context, *FleetEPMInstallPackageRegistryRequest, ...RequestOption) (*FleetEPMInstallPackageRegistryResponse, error) {
 	return func(ctx context.Context, req *FleetEPMInstallPackageRegistryRequest, opts ...RequestOption) (*FleetEPMInstallPackageRegistryResponse, error) {
 		if req == nil {
-			req = &FleetEPMInstallPackageRegistryRequest{}
+			return nil, fmt.Errorf("request cannot be empty")
 		}
 
-		// Get instrumentation if available
 		var instrument Instrumentation
 		if i, ok := api.transport.(Instrumented); ok {
 			instrument = i.InstrumentationEnabled()
 		}
 
-		// Start instrumentation span if available
 		if instrument != nil {
 			var newCtx context.Context
 			newCtx = instrument.Start(ctx, "fleet.epm.install_package_registry")
 			defer instrument.Close(newCtx)
 			ctx = newCtx
 		}
+
 		// Build query parameters
 		params := make(map[string]string)
 
